@@ -90,24 +90,27 @@ public:
    */
   void ProcessMeasurement(MeasurementPackage meas_package);
 
-  /**
-   * Prediction Predicts sigma points, the state, and the state covariance
-   * matrix
-   * @param delta_t Time between k and k+1 in s
-   */
-  void Prediction(double delta_t);
+  void GenerateSigmaPoints(MatrixXd* Xsig_out);
+
+  void AugmentedSigmaPoints(MatrixXd* Xsig_out);
+
+  void SigmaPointPrediction(const MatrixXd &Xsig_aug, double delta_t);
+
+  void PredictionLidar(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
+
+  void PredictionRadar(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
 
   /**
    * Updates the state and the state covariance matrix using a laser measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateLidar(MeasurementPackage meas_package);
+  void UpdateLidar(MeasurementPackage meas_package, const MatrixXd &Zsig, const VectorXd &z_pred, const MatrixXd &S);
 
   /**
    * Updates the state and the state covariance matrix using a radar measurement
    * @param meas_package The measurement at k+1
    */
-  void UpdateRadar(MeasurementPackage meas_package);
+  void UpdateRadar(MeasurementPackage meas_package, const MatrixXd &Zsig, const VectorXd &z_pred, const MatrixXd &S);
 };
 
 #endif /* UKF_H */
