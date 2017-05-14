@@ -96,9 +96,11 @@ public:
 
   void SigmaPointPrediction(const MatrixXd &Xsig_aug, double delta_t);
 
-  void PredictionLidar(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
+  void PredictMeanAndCovariance();
 
-  void PredictionRadar(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
+  void PredictionLidarMeasurement(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
+
+  void PredictionRadarMeasurement(VectorXd* z_out, MatrixXd* S_out, MatrixXd* Zsig_out);
 
   /**
    * Updates the state and the state covariance matrix using a laser measurement
